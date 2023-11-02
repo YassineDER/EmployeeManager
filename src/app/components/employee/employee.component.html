@@ -1,0 +1,111 @@
+<!-- Search -->
+<div class="m-3 d-flex flex-row-reverse">
+    <input type="text" ngModel #key="ngModel" (ngModelChange)="search(key.value)" class="form-control w-25" placeholder="Search for an employee...">
+</div>
+
+
+<div class="container-fluid w-100">
+    <div class="row">
+        <div class="col-md-3 my-2" *ngFor="let e of employees">
+            <!-- Cards -->
+            <div class="card h-100">
+                <img src="{{e?.imageUrl}}" class="card-img-top h-50">
+                <div class="card-body">
+                    <h5 class="card-title">{{e?.name}}</h5>
+                    <p class="card-text text-secondary">{{e?.jobTitle}} </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><i class="bi bi-envelope mx-1"></i>{{e?.email}} </li>
+                    <li class="list-group-item"><i class="bi bi-telephone mx-1"></i> {{e?.phone}}</li>
+                </ul>
+                <div class="m-2 d-flex justify-content-end">
+                    <button class="btn btn-secondary m-1" (click)="this.emp = e" data-bs-toggle="modal"
+                        data-bs-target="#editModal"><i class="bi bi-pencil fs-5"></i></button>
+                    <button class="btn btn-danger m-1" (click)="this.emp = e" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal"> <i class="bi bi-x-circle fs-5"></i> </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-3">Deleting employee</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you wanna delete <strong>{{emp?.name}}</strong> ?</p>
+                <div class="alert alert-warning d-flex align-items-center" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-3"></i> This action is not cancellable
+                </div>
+            </div>
+            <div class="modal-footer py-1">
+                <button type="button" class="btn btn-success mt-2" (click)="deleteEmployee(emp)" data-bs-dismiss="modal">Confirm</button>
+                <button type="button" class="btn btn-danger mt-2">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal title -->
+            <div class="modal-header">
+                <h1 class="modal-title fs-3">Editing employee</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- edit form-->
+            <form #editForm="ngForm">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="txtName" class="form-label">Full name:</label>
+                        <input name="name" type="text" id="txtName" class="form-control" ngModel="{{emp?.name}}">
+                    </div>
+                    <input name="id" type="hidden" class="form-control" ngModel="{{emp?.id}}">
+                    <div class="mb-3">
+                        <label for="txtEmail" class="form-label">Email address:</label>
+                        <input type="email" ngModel="{{emp?.email}}" name="email" class="form-control"
+                            id="txtEmail">
+                    </div>
+                    <label for="txtPhone" class="form-label">Phone number:</label>
+                    <div class="input-group mb-3">
+                        <input type="tel" id="txtPhone" name="phone" ngModel="{{emp?.phone}}" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtJob" class="form-label">Job title:</label>
+                        <input type="text" class="form-control" ngModel="{{emp?.jobTitle}}" id="txtJob" name="jobTitle">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="txtImageUrl" name="imageUrl" ngModel="{{emp?.imageUrl}}">
+                        <a [href]="emp?.imageUrl" class="btn btn-outline-secondary" type="button" id="btnVisualiser">Visualiser</a>
+                    </div>
+
+                    
+                </div>
+                <div class="modal-footer py-1">
+                    <button type="button" (click)="editEmployee(editForm.value)" data-bs-dismiss="modal" class="btn btn-primary mt-2">
+                        <i class="bi bi-floppy-fill me-2"></i> Save</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- No employees alert message-->
+<div class="col-lg-8" *ngIf="employees?.length == 0">
+    <div class="alert alert-info">
+        <h4 class="alert-heading">No employees</h4>
+        <p>There are no employees found.</p>
+    </div>
+</div>

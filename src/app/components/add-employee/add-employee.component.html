@@ -1,0 +1,29 @@
+<h2 class="text-center my-3">Adding new employee</h2>
+<div class="container border w-50 rounded p-4 mt-3">
+    <form #addForm="ngForm" (ngSubmit)="addEmployee(addForm)">
+        <div class="mb-3">
+            <label for="txtName" class="form-label">Full name:</label>
+            <input name="name" type="text" id="txtName" class="form-control" ngModel>
+        </div>
+        <div class="mb-3">
+            <label for="txtEmail" class="form-label">Email address:</label>
+            <input type="email" name="email" class="form-control" id="txtEmail" ngModel>
+        </div>
+        <label for="txtPhone" class="form-label">Phone number:</label>
+        <div class="input-group mb-3">
+            <input type="tel" id="txtPhone" name="phone" class="form-control" ngModel>
+        </div>
+        <div class="mb-3">
+            <label for="txtJob" class="form-label">Job title:</label>
+            <input type="text" class="form-control" id="txtJob" name="jobTitle" ngModel>
+        </div>
+        <label for="txtImageUrl" class="form-label">Image:</label><br>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="txtImageUrl" name="imageUrl" ngModel>
+        </div>
+        <div class="modal-footer py-1">
+            <button type="submit" class="btn btn-primary mt-2">
+                <i class="bi bi-plus-circle me-2"></i> Create </button>
+        </div>
+    </form>
+</div>
